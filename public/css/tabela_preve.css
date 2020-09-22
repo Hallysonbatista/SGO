@@ -1,0 +1,46 @@
+body
+	{
+		/*background-image:url(img/telecomunicacoes.jpg);*/
+		background-size:cover;	
+	}
+table,th,td
+	{
+	
+		margin:auto; /* alinhamento da tabela*/
+		/*background:rgb(0,0,0,0.4); cor de fundo da tabela;*/
+		padding:2px 5px;
+		box-sizing:border-box;
+		border:1px solid black;
+		border-collapse:collapse;
+		/*opacity:0.97;
+		*/
+	}
+	th,td
+	{
+		padding:2px;
+		text-align:center;		
+		
+	}
+	/*.cinza
+	{
+	background:rgba(223,219,219,1.00)
+	}*/
+	.verde
+	{
+	 background:rgba(251,244,67,1.00);	
+	}
+tr:nth-child(even)
+	{
+		background-color: #e8e8e8;
+	}
+tr:nth-child(odd)
+	{
+		background-color: white;
+	}
+	.tipo_prev{
+		 background: #70BF3F;
+	}
+	.porcentagem
+	{
+		background: #98FB98;
+	}

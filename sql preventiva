@@ -1,0 +1,11 @@
+acionadores sql preventiva
+CREATE TRIGGER `deleteauditoria` AFTER DELETE ON `preventiva`
+ FOR EACH ROW DELETE FROM `auditoriapreventiva` WHERE idpreventiva = old.idpreventiva
+
+CREATE TRIGGER `insertauditoria` AFTER INSERT ON `preventiva`
+ FOR EACH ROW INSERT INTO `auditoriapreventiva`(`idauditoriapreventiva`, `sgmp`, idpreventiva,statuscontratada, `usuario`, `usuariomod`, `datamod`) 
+VALUES (null,new.sgmp,new.idpreventiva,"Atividade Programada",1,new.usuariomod,new.datamod)
+
+CREATE TRIGGER `updateauditoria` BEFORE UPDATE ON `preventiva`
+ FOR EACH ROW INSERT INTO `auditoriapreventiva`(`idauditoriapreventiva`, `sgmp`, idpreventiva,`statuscontratada`, `dataexecucao`, `usuario`, `observacoes`, `usuariomod`, `datamod`)
+VALUES (null,new.sgmp,new.idpreventiva,NEW.statuscontratada,new.dataexecucao,NEW.usuario_idusuario,NEW.observacoes,new.usuariomod,new.datamod)
