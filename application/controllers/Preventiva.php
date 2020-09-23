@@ -337,7 +337,7 @@ class Preventiva extends CI_Controller {
                     }
                 }
 
-                exit();
+                
 
                 if ($update == 1) {
                     $this->Core_model->insert('atualizacaosistema', array('pagina' => 'preventiva', 'data' => date("Y-m-d H:i:s")));
