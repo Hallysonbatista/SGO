@@ -498,7 +498,8 @@ class Preventiva extends CI_Controller {
             } else {
                 $array = array(
                     'mesprogramacao' => date('M/Y'),
-                    'contrato' => 'FMMT_Franquia'
+                    'contrato' => 'FMMT_Franquia',
+                    'origemdemanda' => 'Cronograma'
                 );
                 $parametro = functionStringCondicaoAnd($array);
 
