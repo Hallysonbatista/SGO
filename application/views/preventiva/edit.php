@@ -168,6 +168,7 @@ $suspensas = 0;
                                 </div>
                             </div>
                             <input type="hidden" class="form-control text-center" name="idpreventiva" value="<?php echo date($preventiva->idpreventiva) ?>"/>
+                            <input type="hidden" class="form-control text-center" name="alvoPreventiva" value="<?php echo ($preventiva->alvo) ?>"/>
                             <!--<input type="text" name="idpreventiva" value="<?php echo $preventiva->idpreventiva ?>" />-->
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="Atualizar"></label>

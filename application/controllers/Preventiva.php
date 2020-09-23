@@ -237,6 +237,9 @@ class Preventiva extends CI_Controller {
 
     public function atualizarPreventivaStatus() {
         if ($this->ion_auth->in_group(array('admin', 'lider'))) {
+             $copiaEmail = 'anderson.simoes@ezentis.com.br,jordana.alves@ezentis.com.br,silvana.santos@ezentis.com.br,bianca.belasquem@ezentis.com.br';
+//            $copiaEmail = 'hallyson.batista@ezentis.com.br';
+
             $this->form_validation->set_rules('data', 'Data', 'required');
             if ($this->form_validation->run()) {
                 try {
@@ -270,13 +273,7 @@ class Preventiva extends CI_Controller {
 // Cria três variáveis $dia $mes $ano
                         list($dia, $mes, $ano) = $data;
                         $data = "$ano-$mes-01";
-//                        echo '<pre>';
-//                        print_r($value[18]);
-//print_r($time."<br>");
-//                         print_r($data."<br>");
-//                         print_r($value[0]."<br>");
-//
-//                        exit();
+
 
                         if ($row > 0 and $data == $dataForm AND $this->preventiva_model->get_atualizacao_status_all(array('mesprogramacao' => $dataForm, 'sgmp' => $value[0]))) {
                             $preventivasBd = $this->preventiva_model->get_atualizacao_status_all(array('mesprogramacao' => $dataForm, 'sgmp' => $value[0]));
@@ -286,10 +283,9 @@ class Preventiva extends CI_Controller {
                             if ($usuarioSgmp = $this->Core_model->get_all('users', array('matriculatim' => $value[16]))) {
                                 if ($preventivasBd->usersid != $usuarioSgmp[0]->id) {
                                     $atualizaPrevenvida['usersid'] = $usuarioSgmp[0]->id;
-                                if($preventivasBd->acompanhamento == 7){
-                                    $atualizaPrevenvida['acompanhamento'] = 10;
-                                }
-                                    
+                                    if ($preventivasBd->acompanhamento == 7) {
+                                        $atualizaPrevenvida['acompanhamento'] = 10;
+                                    }
                                 }
                             }
 
@@ -317,37 +313,32 @@ class Preventiva extends CI_Controller {
                                 $usuarioLogado = $this->ion_auth->users()->row();
                                 $atualizaPrevenvida['usuariomod'] = 'Automação';
                                 $atualizaPrevenvida['datamod'] = date("Y-m-d H:i:s");
-                                //pegar usuario da prevenva
-
-                                $usuarioDaPreentiva = $this->Core_model->get_by_id('preventiva', array('mesprogramacao' => $dataForm, 'sgmp' => $value[0]));
+                                                
+                                $prevFiltro = $this->Core_model->get_by_id('filtropreventivas', array('mesprogramacaooriginal' => $dataForm, 'sgmp' => $value[0]));
                                 $update = 1;
                                 $this->Core_model->update('preventiva', $atualizaPrevenvida, array('mesprogramacao' => $dataForm, 'sgmp' => $value[0]));
-
-                                if ($usuarioDaPreentiva->usersid != 3) {
+                               //pegar usuario da prevenva 
+                                $usuarioDaPreentiva = $this->Core_model->get_by_id('preventiva', array('mesprogramacao' => $dataForm, 'sgmp' => $value[0]));
+                              
+                                if ($usuarioDaPreentiva->usersid != 3 and $value[25] == 'Rejeitada' and $prevFiltro->nomeacompanhamento != $value[25]) {
 
                                     $destinatario = $this->ion_auth->user($usuarioDaPreentiva->usersid)->row();
 
                                     $acompanhamento = $this->Core_model->get_all('acompanhamentopreventiva', array('idacompanhamento' => $atualizaPrevenvida['acompanhamento']));
-//echo '<pre>';
-//
-//var_dump('Acompanhamento da preventiva (' . $value[4] . ')', $destinatario->email, 'Status da Preventivas -> ' . $value[4], $acompanhamento[0]->nomeacompanhamento, $value[28]);
-//exit();
-                                    $prevFiltro = $this->Core_model->get_by_id('filtropreventivas', array('mesprogramacao' => $dataForm, 'sgmp' => $value[0]));
-                                //init email
-                                //    if($prevFiltro->nomeacompanhamento != $value[25] ){
-                                //         email('Acompanhamento da preventiva (' . $value[4] . ')', $destinatario->email, 'Status da Preventivas -> ' . $value[4], $acompanhamento[0]->nomeacompanhamento,'SGMP ->'.$value[0] ,$value[28]);
-                                //  }
-                                //end email
-                                   
-                                }
-// email('Acompanhamento da preventiva ('.$endid.')', $destinatario->email, 'Status da Preventivas -> '.$endid, $acompanhamento[0]->nomeacompanhamento, $this->input->post('observacoes'));
 
-                                unset($atualizaPrevenvida);
-                                $atualizaPrevenvida = array();
+                                    email('Status preventiva (' . $value[4] . ')', $destinatario->email, $copiaEmail, $value[1]." -> " . $acompanhamento[0]->nomeacompanhamento,"Preventiva: ". $value[4] . "  -   ID: (" . $value[0] .")", $value[28]);
+                                   }
+                                //end email
                             }
+
+                            unset($atualizaPrevenvida);
+                            $atualizaPrevenvida = array();
                         }
                     }
                 }
+
+                exit();
+
                 if ($update == 1) {
                     $this->Core_model->insert('atualizacaosistema', array('pagina' => 'preventiva', 'data' => date("Y-m-d H:i:s")));
                 }
@@ -516,20 +507,12 @@ class Preventiva extends CI_Controller {
                 }
                 $filtro = 'FMMT_Franquia';
             }
-//       $acompanhamento = $this->preventiva_model->get_acompanhamento_all($parametro); 
-//                       echo '<pre>';
-//           print_r($parametro);
-//           exit();
+
             if (!isset($mes)) {
                 $data['mes'] = date('M/Y');
             } else {
                 $data['mes'] = $this->input->post('mesprogramacao');
             }
-//       
-//      echo '<pre>';
-//           print_r( $data['mes']);
-//           exit();
-
 
             $mesBd = $this->crud_model->selectDistinct('mesprogramacao', 'filtropreventivas', array('nomeregiao != ""'));
             $data['mesSelect'] = functionHtmlOptions('', $mesBd, 'mesprogramacao', 'mesprogramacao');
@@ -552,6 +535,9 @@ class Preventiva extends CI_Controller {
     public function editar() {
         $adm_lid_back = array('admin', 'lider', 'backoffice');
         if ($this->ion_auth->in_group($adm_lid_back)) {
+             $copiaEmail = 'anderson.simoes@ezentis.com.br,jordana.alves@ezentis.com.br,silvana.santos@ezentis.com.br,bianca.belasquem@ezentis.com.br';
+//            $copiaEmail = 'hallyson.batista@ezentis.com.br';
+
             $this->form_validation->set_rules('dataexecucao', 'Data Execução', 'required');
             if ($this->form_validation->run()) {
                 $data = elements(
@@ -571,14 +557,19 @@ class Preventiva extends CI_Controller {
                 $user = $this->ion_auth->user()->row();
                 $data['usuariomod'] = $user->first_name;
 //            echo '<pre>';
-//            print_r($this->input->post('endid'));
+//            print_r(html_escape($this->input->post('alvoPreventiva')));
 //            exit();
                 $data = html_escape($data); //limpar possiveis codigos maliciosos do input
                 $condicao['idpreventiva'] = html_escape($this->input->post('idpreventiva'));
 
                 if ($this->Core_model->update('preventiva', $data, $condicao)) {
                     $this->session->set_flashdata('sucesso', 'Dados atualizados com sucesso');
-                    email('Status preventiva (' . $endid . ')', $destinatario->email, 'Status da Preventivas -> ' . $endid, $acompanhamento[0]->nomeacompanhamento, $this->input->post('observacoes'));
+                    if (html_escape($this->input->post('acompanhamento')) == '4' || html_escape($this->input->post('acompanhamento')) == '5') {
+                        email('Status preventiva (' . $endid . ')', $destinatario->email, $copiaEmail, html_escape($this->input->post('alvoPreventiva'))." -> " . $acompanhamento[0]->nomeacompanhamento, "Preventiva: ". $endid . "  -   ID: (" . html_escape($this->input->post('idpreventiva')).")", $this->input->post('observacoes'));
+                       
+                        
+                    }
+
                     redirect('preventiva');
                 } else {
                     $this->session->set_flashdata('error', 'Erro ao atualizadosos dados da preventiva');

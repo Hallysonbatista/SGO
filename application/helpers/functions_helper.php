@@ -31,7 +31,7 @@ function functionVerificaEndId($array) {
     return $itens;
 }
 
-function email($assunto, $destinatario, $tituloPrincipal, $titulo, $mensagem) {
+function email($assunto, $destinatario,$copiaEmail, $tituloPrincipal, $titulo, $mensagem) {
     $Ci = &get_instance();
     $Ci->load->library('email');
 
@@ -40,7 +40,7 @@ function email($assunto, $destinatario, $tituloPrincipal, $titulo, $mensagem) {
     $Ci->email->subject($assunto);
     $Ci->email->reply_to("");
     $Ci->email->to($destinatario);
-    $Ci->email->cc('anderson.simoes@ezentis.com.br,jordana.alves@ezentis.com.br,silvana.santos@ezentis.com.br,bianca.belasquem@ezentis.com.br');
+    $Ci->email->cc($copiaEmail);
     $Ci->email->bcc('');
     $Ci->email->message('
         <style>
