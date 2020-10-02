@@ -108,7 +108,7 @@ date_default_timezone_set('America/Sao_Paulo');
                             <div class="form-group text-center">
                                 <label for="detalhamento">Detalhamento</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-check-square fa" aria-hidden="true"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-comment-o" aria-hidden="true"></i></i></span>
                                     <textarea class="form-control text-center" disabled name="detalhamento"><?php echo $wo->detalhamento ?></textarea>
                                     <?php echo form_error('detalhamento', '<span asp-validation-for="detalhamento" class="text-danger">', '</span>') ?>
                                 </div>
@@ -121,6 +121,20 @@ date_default_timezone_set('America/Sao_Paulo');
                                 </div>
                                 <?php echo form_error('ate', '<span asp-validation-for="ate" class="text-danger">', '</span>') ?>
                             </div>
+                                                        <div class="form-group text-center">
+                                <label for="status">Status</label>
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-check-square-o" aria-hidden="true"></i></span>
+                                    <select type="text" class="form-control text-center select2 multiple" name="status"/>
+                                    <option value="<?php echo $wo->status ?>"><?php echo $wo->status ?></option>
+                                    <option value="Working">Working</option>
+                                    <option value="Closed">Closed</option>
+                                    <option value="Aguardando Aprazamento">Aguardando Aprazamento</option>
+                                    <option value="Aguardando Justificativa">Aguardando Justificativa</option>
+                                    </select>
+                                    <?php echo form_error('usersid', '<span asp-validation-for="usersid" class="text-danger">', '</span>') ?>
+                                </div>
+                            </div>
                             <div class="form-group text-center">
                                 <label for="datafechamento">Data Execução</label>
                                 <div class="input-group">
@@ -132,7 +146,7 @@ date_default_timezone_set('America/Sao_Paulo');
                             <div class="form-group text-center">
                                 <label for="horasdeslocamento">Hora deslocamento</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-car" aria-hidden="true"></i></i></span>
                                     <input type="number" class="form-control text-center" name="horasdeslocamento" value="<?php echo $wo->horasdeslocamento ?>"/>
                                 </div>
                                 <?php echo form_error('horasdeslocamento', '<span asp-validation-for="horasdeslocamento" class="text-danger">', '</span>') ?>
@@ -140,7 +154,7 @@ date_default_timezone_set('America/Sao_Paulo');
                             <div class="form-group text-center">
                                 <label for="horastrabalhadas">Horas trabalhadas</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa-calendar fa" aria-hidden="true"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-clock-o" aria-hidden="true"></i></span>
                                     <input type="number" class="form-control text-center" name="horastrabalhadas" value="<?php echo $wo->horasdeslocamento ?>"/>
                                 </div>
                                 <?php echo form_error('horastrabalhadas', '<span asp-validation-for="horastrabalhadas" class="text-danger">', '</span>') ?>
@@ -155,10 +169,10 @@ date_default_timezone_set('America/Sao_Paulo');
                             </div>
 
                             <div class="form-group text-center">
-                                <label for="usersid">Técnico</label>
+                                <label for="tecnico">Técnico</label>
                                 <div class="input-group">
                                     <span class="input-group-addon"><i class="fa fa-user fa"></i></span>
-                                    <select type="text" class="form-control text-center select2 multiple" name="usersid"/>
+                                    <select type="text" class="form-control text-center select2 multiple" name="tecnico"/>
                                     <option value="<?php echo $wo->tecnico ?>"><?php
                                         if ($wo->tecnico == 1) {
                                             echo '';
@@ -176,18 +190,18 @@ date_default_timezone_set('America/Sao_Paulo');
                             <div class="form-group text-center">
                                 <label for="fechamento">Nota fechamento</label>
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="fa fa fa-comment text-info fa" aria-hidden="true"></i></span>
+                                    <span class="input-group-addon"><i class="fa fa-commenting" aria-hidden="true"></i></i></span>
                                     <textarea class="form-control" name="fechamento"><?php echo $wo->fechamento ?></textarea>
                                     <?php echo form_error('fechamento', '<span asp-validation-for="fechamento" class="text-danger">', '</span>') ?>
                                 </div>
                             </div>
                             
-                            <!--<input type="text" name="idpreventiva" value="<?php // echo $preventiva->idpreventiva ?>" />-->
+                            <input type="text" name="idwo" hidden value="<?php echo $wo->idwo ?>" />
                             <div class="form-group">
                                 <label class="col-md-3 control-label" for="Atualizar"></label>
                                 <div class="col-md-8">
                                     <button class="btn btn-success" type="Submit">Atualizar</button>
-                                    <a href="<?php echo base_url('preventiva') ?>" class="btn btn-danger">Cancelar</a>
+                                    <a href="<?php echo base_url('wo') ?>" class="btn btn-danger">Cancelar</a>
                                 </div>
                             </div> 
 

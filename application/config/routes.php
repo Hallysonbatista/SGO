@@ -60,7 +60,8 @@ $route['CadastrarPreventiva'] = 'Preventiva/cargaMassivaProgramacao';
 $route['atualizarStatusPreventiva'] = 'Preventiva/atualizarPreventivaStatus';
 $route['acompanhamento'] = 'Preventiva/acompanhamento';
 $route['estacoes'] = 'estacao/index';
-
+$route['historicowo'] = 'wo/historicowo';
+$route['historicowos'] = 'wo/resultadoHistoricoWo';
 
 
 
