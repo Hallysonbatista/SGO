@@ -215,7 +215,8 @@ class Preventiva extends CI_Controller {
             $sheet->setCellValue('J' . $cont, $row->mesprogramacao);
             $sheet->setCellValue('K' . $cont, $row->nomeacompanhamento);
             $sheet->setCellValue('L' . $cont, $row->nomeusuario);
-            $sheet->setCellValue('M' . $cont, $row->observacoes);
+            $sheet->setCellValue('M' . $cont, $row->responsabilidade);
+            $sheet->setCellValue('N' . $cont, $row->observacoes);
             $cont++;
         }
 
